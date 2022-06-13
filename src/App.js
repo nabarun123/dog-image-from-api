@@ -1,23 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 function App() {
+  const [details, setDetails] = useState([]);
+  const fetchDetails = async () => {
+    const data = await axios.get("https://dog.ceo/api/breed/malinois/images");
+    setDetails(data.data.message);
+    console.log(data);
+  };
+  useEffect(() => {
+    fetchDetails();
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Hello Relevel</h1>
+      {details.map((item) => (
+        <div className="dog">
+          <img height="30%" width="60%" src={item} />
+        </div>
+      ))}
     </div>
   );
 }
